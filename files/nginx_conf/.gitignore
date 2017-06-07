@@ -1,0 +1,5 @@
+*
+!.gitignore
+!adminer.conf
+!default.conf
+!laravel.conf

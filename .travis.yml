@@ -1,0 +1,23 @@
+sudo: required
+
+services:
+  - docker
+
+env:
+  - FOLDER_PATH: /var/www/app/laravel
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-engine
+  - docker swarm init
+  - docker stack deploy -c docker-compose.yml local
+  - sleep 10
+  - docker stack ps local
+  - docker ps -a
+
+install:
+  - docker exec -it $(docker ps -f name=php -q) sh -c "cd ${FOLDER_PATH} && composer install"
+  - docker exec -it $(docker ps -f name=php -q) sh -c "cd ${FOLDER_PATH} && php artisan migrate:refresh --seed --env=testing"
+
+script:
+  - docker exec -it $(docker ps -f name=php -q) sh -c "cd ${FOLDER_PATH} && phpunit"

@@ -1,0 +1,37 @@
+version:         "3"
+services:
+  db:
+    image:       mysql:5.7
+    volumes:
+      - "./files/mysql_data:/var/lib/mysql"
+    env_file:    .env
+    ports:
+      - "3306:3306"
+    networks:
+      - db-network
+  php:
+    image:       k2levin/php-laravel:latest
+    volumes:
+      - "./files/adminer.php:/var/www/html/adminer/index.php"
+      - "./laravel:/var/www/app/laravel"
+    depends_on:
+      - db
+    networks:
+      - db-network
+      - web-network
+  web:
+    image:       nginx:alpine
+    volumes:
+      - "./files/nginx_conf:/etc/nginx/conf.d"
+      - "./files/index.html:/var/www/html/index.html"
+      - "./files/adminer.php:/var/www/html/adminer/index.php"
+      - "./laravel:/var/www/app/laravel"
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+    networks:
+      - web-network
+networks:
+  db-network:
+  web-network:
