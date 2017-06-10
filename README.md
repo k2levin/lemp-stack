@@ -12,3 +12,5 @@ Services in the stack:
 * E - Nginx
 * M - MySQL
 * P - PHP
+* R - Redis
+* N - NPM
