@@ -3,7 +3,7 @@ services:
   db:
     image:        mysql:5.7
     volumes:
-      - "./files/mysql_data:/var/lib/mysql"
+      - "./files/mysql_data/:/var/lib/mysql/"
     env_file:     .env
     ports:
       - "3306:3306"
@@ -12,14 +12,13 @@ services:
   redis:
     image:        redis:alpine
     volumes:
-      - "./files/redis_data:/data"
+      - "./files/redis_data/:/data/"
     networks:
       - redis-network
   php:
     image:        k2levin/php-laravel:latest
     volumes:
-      - "./files/adminer.php:/var/www/html/adminer/index.php"
-      - "./laravel:/var/www/app/laravel"
+      - "./laravel/:/var/www/app/laravel/"
     depends_on:
       - db
       - redis
@@ -30,10 +29,8 @@ services:
   web:
     image:        nginx:alpine
     volumes:
-      - "./files/nginx_conf:/etc/nginx/conf.d"
-      - "./files/index.html:/var/www/html/index.html"
-      - "./files/adminer.php:/var/www/html/adminer/index.php"
-      - "./laravel:/var/www/app/laravel"
+      - "./files/nginx_conf/laravel.conf:/etc/nginx/conf.d/laravel.conf"
+      - "./laravel/:/var/www/app/laravel/"
     ports:
       - "80:80"
     depends_on:
@@ -43,7 +40,7 @@ services:
   npm:
     image:        k2levin/npm-service:latest
     volumes:
-      - "/c/Code:/var/www/app"
+      - "./laravel/:/var/www/app/laravel/"
 networks:
   db-network:
   redis-network:
