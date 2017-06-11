@@ -30,7 +30,8 @@ docker exec -it $(docker ps -f name=php -q) bash
 ```
 
 ### Note:
-If having issue with mouting volume, then use full path, ex: ```/c/Code/Laravel/```
+- I created convenient startup bash script with **alias** command => [Alias bash script](https://github.com/k2levin/lemp-stack/wiki/Alias-bash-script)
+- If having issue with mouting volume, then use full path, ex: ```/c/Code/Laravel/```
 
 ### Extra:
-Checkout branch **lamp-stack** if want to use Apache
+- Checkout branch [lamp-stack](https://github.com/k2levin/lemp-stack/tree/lamp-stack) if prefer Apache
