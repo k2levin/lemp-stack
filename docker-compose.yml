@@ -15,33 +15,20 @@ services:
       - "./files/redis_data/:/data/"
     networks:
       - redis-network
-  php:
-    image:        k2levin/php-laravel:latest
+  app:
+    image:        k2levin/php-laravel:misc
     volumes:
+      - "./files/index.html:/var/www/html/index.html"
       - "./laravel/:/var/www/app/laravel/"
+      - "./files/nginx_conf/:/etc/nginx/conf.d/"
     depends_on:
       - db
       - redis
+    ports:
+      - "80:80"
     networks:
       - redis-network
       - db-network
-      - web-network
-  web:
-    image:        nginx:alpine
-    volumes:
-      - "./files/nginx_conf/laravel.conf:/etc/nginx/conf.d/laravel.conf"
-      - "./laravel/:/var/www/app/laravel/"
-    ports:
-      - "80:80"
-    depends_on:
-      - php
-    networks:
-      - web-network
-  npm:
-    image:        k2levin/npm-service:latest
-    volumes:
-      - "./laravel/:/var/www/app/laravel/"
 networks:
   db-network:
   redis-network:
-  web-network:
