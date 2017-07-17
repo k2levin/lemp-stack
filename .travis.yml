@@ -13,13 +13,13 @@ before_install:
   - sudo apt-get -y install docker-ce
   - docker swarm init
   - docker stack deploy -c docker-compose.yml local
-  - sleep 10
+  - sleep 30
   - docker stack ps local
   - docker ps -a
 
 install:
-  - docker exec -it $(docker ps -f name=php -q) sh -c "cd ${FOLDER_PATH} && composer install"
-  - docker exec -it $(docker ps -f name=php -q) sh -c "cd ${FOLDER_PATH} && php artisan migrate:refresh --seed --env=testing"
+  - docker exec -it $(docker ps -f name=app -q) sh -c "cd ${FOLDER_PATH} && composer install"
+  - docker exec -it $(docker ps -f name=app -q) sh -c "cd ${FOLDER_PATH} && php artisan migrate:refresh --seed --env=testing"
 
 script:
-  - docker exec -it $(docker ps -f name=php -q) sh -c "cd ${FOLDER_PATH} && phpunit"
+  - docker exec -it $(docker ps -f name=app -q) sh -c "cd ${FOLDER_PATH} && vendor/bin/phpunit"
