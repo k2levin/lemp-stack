@@ -7,8 +7,10 @@ env:
   - FOLDER_PATH: /var/www/app/laravel
 
 before_install:
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
   - sudo apt-get update
-  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-engine
+  - sudo apt-get -y install docker-ce
   - docker swarm init
   - docker stack deploy -c docker-compose.yml local
   - sleep 10
