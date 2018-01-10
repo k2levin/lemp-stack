@@ -16,7 +16,7 @@ services:
     networks:
       - redis-network
   app:
-    image:        k2levin/php-laravel:misc
+    image:        k2levin/php-laravel:latest
     volumes:
       - "$PWD/files/index.html:/var/www/html/index.html"
       - "$PWD/laravel/:/var/www/app/laravel/"
