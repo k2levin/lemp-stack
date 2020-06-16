@@ -1,4 +1,4 @@
 *
 !.gitignore
 !default.conf
-!laravel.conf
+!code.conf

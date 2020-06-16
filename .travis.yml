@@ -4,7 +4,7 @@ services:
   - docker
 
 env:
-  - FOLDER_PATH: /var/www/app/laravel
+  - FOLDER_PATH: /var/www/app
 
 before_install:
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -18,9 +18,5 @@ before_install:
   - docker stack ps local
   - docker ps -a
 
-install:
-  - docker exec -it $(docker ps -f name=app -q) sh -c "cd ${FOLDER_PATH} && composer install"
-  - docker exec -it $(docker ps -f name=app -q) sh -c "cd ${FOLDER_PATH} && php artisan migrate:refresh --seed --env=testing"
-
 script:
-  - docker exec -it $(docker ps -f name=app -q) sh -c "cd ${FOLDER_PATH} && vendor/bin/phpunit"
+  - docker exec -it $(docker ps -f name=app -q) sh -c "cd ${FOLDER_PATH} && php index.php"

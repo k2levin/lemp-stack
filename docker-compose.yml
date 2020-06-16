@@ -19,7 +19,7 @@ services:
     image:        k2levin/php-laravel:latest
     volumes:
       - "$PWD/files/index.html:/var/www/html/index.html"
-      - "$PWD/laravel/:/var/www/app/laravel/"
+      - "$PWD/code/:/var/www/app/"
       - "$PWD/files/nginx_conf/:/etc/nginx/conf.d/"
     depends_on:
       - db
